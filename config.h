@@ -33,6 +33,7 @@
 #define MS_ESPERA_POST_LLENADO   3000   // ms que espera antes de expulsar
 #define MS_DEBOUNCE_IR            500   // ms de debounce tras salir la botella
 #define MS_DEBOUNCE_FLUJO           2   // ms de debounce en interrupción de flujo
+#define MS_ESPERA_GOTEO          2000   // ms que espera tras detectar goteo antes de volver a llenar
 
 // -------- TAREAS FreeRTOS --------
 #define STACK_CONTROL    4096

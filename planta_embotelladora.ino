@@ -217,25 +217,21 @@ void taskControl(void* pvParameters) {
             // -----------------------------------------------------------------
             case FINALIZADO: {
                 if (!reporteEnviado) {
-                    // Incrementar contador con semáforo para acceso seguro
                     if (xSemaphoreTake(semContador, pdMS_TO_TICKS(10)) == pdTRUE) {
                         contadorBotellas++;
                         xSemaphoreGive(semContador);
                     }
-                    encolarLog("FINALIZADO", "Llenado completo", contadorBotellas);
+                    encolarLog("FINALIZADO", "Llenado completo, esperando goteo", contadorBotellas);
 
-                    // Activar banda por tiempo fijo para expulsar la botella.
-                    // taskActuadores leerá bandaActivaHasta y mantendrá la banda
-                    // encendida sin importar el estado de la máquina.
+                    // Esperar quieto a que deje de gotear
+                    vTaskDelay(pdMS_TO_TICKS(MS_ESPERA_GOTEO));
+
+                    // Ahora sí activar la banda para expulsar
                     bandaActivaHasta = millis() + MS_ESPERA_POST_LLENADO;
-
                     reporteEnviado = true;
                 }
-
-                // Esperar a que la banda haya tenido tiempo de mover la botella
-                // y a que el sensor IR confirme que ya no hay botella.
                 if (millis() >= bandaActivaHasta && !hayBotella) {
-                    vTaskDelay(pdMS_TO_TICKS(MS_DEBOUNCE_IR)); // debounce final
+                    vTaskDelay(pdMS_TO_TICKS(MS_DEBOUNCE_IR));
                     estadoActual   = BUSCANDO;
                     reporteEnviado = false;
                 }
