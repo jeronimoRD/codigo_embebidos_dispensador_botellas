@@ -1,0 +1,29 @@
+# =============================================================================
+# .gitignore — Planta Embotelladora ESP32
+# =============================================================================
+
+# ⚠️ CREDENCIALES — Nunca subir al repositorio
+config.h
+
+# -------- Arduino / IDE --------
+build/
+*.elf
+*.bin
+*.hex
+*.map
+
+# -------- Arduino IDE 2.x --------
+.arduino15/
+**/.cache/
+
+# -------- PlatformIO (si migras) --------
+.pio/
+.vscode/
+
+# -------- Sistema operativo --------
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# -------- Logs --------
+*.log
